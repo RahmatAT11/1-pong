@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class SideWall : MonoBehaviour
 {
+    // Skrip GameManager untuk mengakses skor maksimal
+    [SerializeField] 
+    private GameManager gameManager;
+    
     // Pemain yang akan bertambah skornya jika bola menyentuh dinding ini
     public PlayerControl player;
     
@@ -30,12 +34,12 @@ public class SideWall : MonoBehaviour
             player.IncrementScore();
             
             // Jika skor pemain belum mencapai skor maksimal
-            //if (player.Score < gameManager.maxScore)
-            //{
+            if (player.Score < gameManager.maxScore)
+            {
                 //.....restart game setelah bola mengenai dinding
-            //    anotherCollider.gameObject.SendMessage("Restart Game", 2.0f, 
-            //        SendMessageOptions.RequireReceiver);
-            //}
+                anotherCollider.gameObject.SendMessage("RestartGame", 2.0f, 
+                    SendMessageOptions.RequireReceiver);
+            }
         }
     }
 }
