@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BallControl : MonoBehaviour
 {
@@ -11,6 +13,15 @@ public class BallControl : MonoBehaviour
     public float xInitialForce;
     public float yInitialForce;
     
+    // Titik asal lintasan bola saat ini
+    private Vector2 trajectoryOrigin;
+    
+    // Untuk mengakses informasi titik asal lintasan
+    public Vector2 TrajectoryOrigin
+    {
+        get { return trajectoryOrigin; }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +29,8 @@ public class BallControl : MonoBehaviour
         
         // Mulai game
         RestartGame();
+
+        trajectoryOrigin = transform.position;
     }
 
     // Update is called once per frame
@@ -63,5 +76,11 @@ public class BallControl : MonoBehaviour
         
         // Setelah 2 detik, berikan gaya ke bola
         Invoke("PushBall", 2);
+    }
+
+    // Ketika bola beranjak dari sebuat tumbukan, rekam titik tumbukan tersebut
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        trajectoryOrigin = transform.position;
     }
 }
